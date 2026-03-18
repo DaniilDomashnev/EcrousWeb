@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ecrous WebStudio - визуальный конструктор лендингов и сайтов с живым предпросмотром и экспортом HTML.">
+  <title>Ecrous WebStudio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/editor.css">
+  <link rel="icon" type="image/png" href="assets/EcrousWebStudio.png">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+  <div class="app-shell">
+    <div class="app-backdrop app-backdrop-one"></div>
+    <div class="app-backdrop app-backdrop-two"></div>
+
+    <div class="app-container">
+      <header class="app-header">
+        <div class="header-left">
+          <div class="brand-mark">
+            <img src="assets/EcrousWebStudio.png" alt="Ecrous WebStudio">
+          </div>
+          <div class="brand-copy">
+            <p class="eyebrow">Visual Website Builder</p>
+            <h1 class="app-title">Ecrous WebStudio</h1>
+          </div>
+          <div class="project-menu">
+            <button id="projectMenuBtn" class="btn btn-secondary">
+              <i class="ri-folder-open-line"></i>
+              Проекты
+            </button>
+            <div id="projectDropdown" class="project-dropdown-content">
+              <a href="#" id="newProjectBtn">Новый проект</a>
+              <a href="#" id="saveProjectAsBtn">Сохранить как...</a>
+              <hr>
+              <div id="recentProjectsList"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="project-status">
+            <span class="status-dot"></span>
+            <span id="projectStatusText">Черновик готов к редактированию</span>
+          </div>
+          <button id="undoBtn" class="btn btn-secondary" type="button" title="Отменить">
+            <i class="ri-arrow-go-back-line"></i>
+          </button>
+          <button id="redoBtn" class="btn btn-secondary" type="button" title="Повторить">
+            <i class="ri-arrow-go-forward-line"></i>
+          </button>
+          <button id="pageSettingsBtn" class="btn btn-secondary" type="button">
+            <i class="ri-settings-3-line"></i>
+            Страница
+          </button>
+          <button id="previewBtn" class="btn btn-secondary">
+            <i class="ri-eye-line"></i>
+            Предпросмотр
+          </button>
+          <button id="exportBtn" class="btn btn-primary">
+            <i class="ri-download-2-line"></i>
+            Экспорт HTML
+          </button>
+          <button id="clearBtn" class="btn btn-ghost">
+            <i class="ri-delete-bin-6-line"></i>
+            Очистить
+          </button>
+        </div>
+      </header>
+
+      <div class="workspace">
+        <aside class="sidebar sidebar-left">
+          <div class="sidebar-head">
+            <h3 class="sidebar-title">Добавить блок</h3>
+            <p class="sidebar-subtitle">Библиотека секций для быстрого прототипа и готового лендинга.</p>
+            <label class="sidebar-search">
+              <i class="ri-search-line"></i>
+              <input id="blockSearchInput" type="text" placeholder="Поиск по блокам">
+            </label>
+          </div>
+          <div class="blocks-library" id="blocksLibrary"></div>
+        </aside>
+
+        <main class="canvas-stage">
+          <div class="canvas-frame">
+            <div class="canvas-toolbar">
+              <div class="canvas-toolbar-group">
+                <span class="browser-dot"></span>
+                <span class="browser-dot"></span>
+                <span class="browser-dot"></span>
+              </div>
+              <div class="canvas-info">
+                <i class="ri-layout-4-line"></i>
+                Холст редактирования
+              </div>
+              <div class="canvas-toolbar-group canvas-actions">
+                <div class="view-switcher" id="viewSwitcher">
+                  <button class="view-btn active" data-view="desktop" type="button" title="Desktop">
+                    <i class="ri-computer-line"></i>
+                  </button>
+                  <button class="view-btn" data-view="tablet" type="button" title="Tablet">
+                    <i class="ri-tablet-line"></i>
+                  </button>
+                  <button class="view-btn" data-view="mobile" type="button" title="Mobile">
+                    <i class="ri-smartphone-line"></i>
+                  </button>
+                </div>
+                <div class="canvas-stat">
+                  <strong id="blocksCountValue">0</strong>
+                  <span>блоков</span>
+                </div>
+                <button id="insertTemplateBtn" class="toolbar-btn" type="button">
+                  <i class="ri-magic-line"></i>
+                  Стартовый шаблон
+                </button>
+              </div>
+            </div>
+            <div class="canvas" id="canvas">
+              <div class="canvas-placeholder">
+                <i class="ri-layout-grid-line placeholder-icon"></i>
+                <h3>Начните с готовой структуры</h3>
+                <p>Добавьте блок слева или вставьте стартовый шаблон, чтобы получить полноценный лендинг и сразу перейти к редактированию.</p>
+                <div class="placeholder-actions">
+                  <button class="btn btn-primary" id="placeholderTemplateBtn" type="button">
+                    <i class="ri-sparkling-2-line"></i>
+                    Вставить шаблон
+                  </button>
+                  <button class="btn btn-secondary" id="placeholderFirstBlockBtn" type="button">
+                    <i class="ri-add-line"></i>
+                    Добавить первый блок
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <aside class="sidebar sidebar-right">
+          <div class="sidebar-head">
+            <h3 class="sidebar-title">Настройки блока</h3>
+            <p class="sidebar-subtitle">Выберите блок на холсте, чтобы изменить текст, цвета, отступы и ссылки.</p>
+          </div>
+          <div class="properties-panel" id="propertiesPanel">
+            <div class="no-selection">
+              <i class="ri-settings-4-line no-selection-icon"></i>
+              <h3>Ничего не выбрано</h3>
+              <p>Выберите любой блок на холсте и его свойства появятся здесь.</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <div id="exportModal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Экспорт HTML</h2>
+        <button class="modal-close" id="closeModal" aria-label="Закрыть">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Файл уже собран. Ниже можно проверить код, скачать его или скопировать в буфер обмена.</p>
+        <textarea id="exportCode" readonly spellcheck="false"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button id="downloadBtn" class="btn btn-primary">
+          <i class="ri-download-line"></i>
+          Скачать index.html
+        </button>
+        <button id="copyBtn" class="btn btn-secondary">
+          <i class="ri-file-copy-line"></i>
+          Копировать код
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="dialogModal" class="modal" aria-hidden="true">
+    <div class="modal-content dialog-content">
+      <div class="modal-header">
+        <h2 id="dialogTitle">Внимание</h2>
+        <button class="modal-close" id="dialogClose" aria-label="Закрыть">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p id="dialogMessage">Сообщение</p>
+        <input id="dialogInput" class="property-input dialog-input" style="display:none;" />
+      </div>
+      <div class="modal-footer">
+        <button id="dialogCancel" class="btn btn-secondary">Отмена</button>
+        <button id="dialogOk" class="btn btn-primary">Ок</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="notificationHost" class="notification-host" aria-live="polite" aria-atomic="true"></div>
+
+  <div id="pageSettingsModal" class="modal" aria-hidden="true">
+    <div class="modal-content dialog-content">
+      <div class="modal-header">
+        <h2>Настройки страницы</h2>
+        <button class="modal-close" id="pageSettingsClose" aria-label="Закрыть">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="property-group">
+          <div class="property-item">
+            <label class="property-label" for="siteTitleInput">Название страницы</label>
+            <input id="siteTitleInput" class="property-input" type="text" placeholder="Название сайта">
+          </div>
+          <div class="property-item">
+            <label class="property-label" for="siteDescriptionInput">Meta description</label>
+            <textarea id="siteDescriptionInput" class="property-textarea" placeholder="Краткое описание страницы для поиска и предпросмотра"></textarea>
+          </div>
+          <div class="property-item">
+            <label class="property-label" for="siteBgInput">Фон страницы</label>
+            <input id="siteBgInput" class="property-input" type="text" placeholder="Например linear-gradient(...) или #07111f">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="pageSettingsCancel" class="btn btn-secondary" type="button">Отмена</button>
+        <button id="pageSettingsSave" class="btn btn-primary" type="button">Сохранить</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/blocks.js"></script>
+  <script src="js/editor.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
